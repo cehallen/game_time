@@ -1,4 +1,4 @@
-# require 'pry'
+require 'pry'
 # require 'shotgun'
 # require 'csv'
 # require 'sinatra'
@@ -69,26 +69,38 @@ def add_wins_losses(teams_hash, stats)
     end
   end
   teams_hash_w_record = teams_hash
+  # kinda confusing, want to make hash an array for returning to sort rankings below so it can be recursive
+  teams_array_w_record = teams_hash_w_record.values
 end
 
-         ###############
-def sort_rankings(teams_hash_w_record)
-  # change from outer hash to outer array
-  records_array = teams_hash_w_record.values
-
-  biggest = records_array.pop
-  ranked = []
+         ############### wrapper for sort method
+def sort_rankings(teams_array_w_record)
+  rec_sort_rankings(teams_array_w_record, [])
+end
+         ############### sort by wins
+def rec_sort_rankings(unranked, ranked)
+  if unranked.length <= 0
+    return ranked
+  end
+  biggest = unranked.pop
   still_unranked = []
-  records_array.each do |team|
-    if biggest[:w] > team[:w]
-
+  unranked.each do |team|
+    if biggest[:w] < team[:w]
+      still_unranked.push(biggest)
+      biggest = team
+    else biggest[:w] > team[:w]
+      still_unranked.push(team)
     end
   end
+  ranked.push(biggest)
+  rec_sort_rankings(still_unranked, ranked)
 end
          ###############
 teams_hash = build_teams(stats)
-teams_hash_w_record = add_wins_losses(teams_hash, stats)
-p teams_hash_w_record
+teams_array_w_record = add_wins_losses(teams_hash, stats)
+# p teams_array_w_record
+p sort_rankings(teams_array_w_record)
+
 
 
          ###############
