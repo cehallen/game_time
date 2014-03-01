@@ -85,10 +85,14 @@ def rec_sort_rankings(unranked, ranked)
   biggest = unranked.pop
   still_unranked = []
   unranked.each do |team|
+    # these conditionals could be consolidated, but may be harder to read
     if biggest[:w] < team[:w]
       still_unranked.push(biggest)
       biggest = team
-    else biggest[:w] > team[:w]
+    elsif biggest[:w] == team[:w] && biggest[:l] > team[:l]
+      still_unranked.push(biggest)
+      biggest = team
+    else # biggest[:w] > team[:w]
       still_unranked.push(team)
     end
   end
