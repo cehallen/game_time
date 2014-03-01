@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>League Rankings</title>
+  </head>
+  <body>
+    <h1>League Rankings</h1>
+    <table>
+      <tr>
+        <td><strong>Team</strong></td>
+        <td><strong>Wins</strong></td>
+        <td><strong>Losses</strong></td>
+      </tr>
+      <% @sorted_rankings.each do |team| %>
+        <tr>
+          <td><%= team[:name] %></td>
+          <td><%= team[:w] %></td>
+          <td><%= team[:l] %></td>
+        </tr>
+      <% end %>
+    </table>
+    <a href="/">Home</a>
+  </body>
+</html>

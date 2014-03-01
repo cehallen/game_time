@@ -1,7 +1,6 @@
 require 'pry'
-# require 'shotgun'
-# require 'csv'
-# require 'sinatra'
+require 'shotgun'
+require 'sinatra'
 
          ###############
 stats = [
@@ -30,16 +29,6 @@ stats = [
     away_score: 21
   }
 ]
-         ##############
-# get '/' do
-#   erb :index
-# end
-
-# get '/leaderboard'
-#   @league_stats_array = league_stats_array
-#   erb :leaderboard
-# end
-
 
          ############### this will create a template of teams with 0 wins and 0 losses
 def build_teams(stats)
@@ -102,11 +91,21 @@ end
          ###############
 teams_hash = build_teams(stats)
 teams_array_w_record = add_wins_losses(teams_hash, stats)
-# p teams_array_w_record
-p sort_rankings(teams_array_w_record)
+sorted_rankings = sort_rankings(teams_array_w_record)
+# p sorted_rankings
+
+         ##############
+get '/' do
+  erb :index
+end
+
+get '/leaderboard' do
+  @sorted_rankings = sorted_rankings
+  erb :leaderboard
+end
 
 
 
          ###############
-# set :views, File.dirname(__FILE__) + '/views'
-# set :public_folder, File.dirname(__FILE__) + '/public'
+set :views, File.dirname(__FILE__) + '/views'
+set :public_folder, File.dirname(__FILE__) + '/public'
