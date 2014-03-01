@@ -41,7 +41,7 @@ stats = [
 # end
 
 
-         ############### this will create a template of teams with 0 wins and losses
+         ############### this will create a template of teams with 0 wins and 0 losses
 def build_teams(stats)
   teams_hash = {}
   stats.each do |game|
@@ -57,11 +57,28 @@ def build_teams(stats)
 end
          ############### this will add wins and losses to teams_hash
 def add_wins_losses(teams_hash, stats)
-
+  stats.each do |game|
+    if game[:home_score] > game[:away_score]
+      #add win to home teams win's in teams_hash, add loss to away team
+      teams_hash[game[:home_team]][:w] += 1
+      teams_hash[game[:away_team]][:l] += 1
+    else
+      #add win to away team's wins in teams_hash, add loss to home team
+      teams_hash[game[:away_team]][:w] += 1
+      teams_hash[game[:home_team]][:l] += 1
+    end
+  end
+  teams_hash_w_record = teams_hash
 end
 
          ###############
-# teams_hash = build_teams(stats)
+def sort_rankings(teams_hash_w_record)
+
+end
+         ###############
+teams_hash = build_teams(stats)
+teams_hash_w_record = add_wins_losses(teams_hash, stats)
+p teams_hash_w_record
 
 
          ###############
