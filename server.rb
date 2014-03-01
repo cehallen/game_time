@@ -50,7 +50,7 @@ def build_teams(stats)
     end
     if
       !teams_hash[game[:away_team]].is_a?(Hash)
-      teams_hash[game[:away_team]] = {name: game[:home_team], w: 0, l: 0}
+      teams_hash[game[:away_team]] = {name: game[:away_team], w: 0, l: 0}
     end
   end
   teams_hash
@@ -59,11 +59,11 @@ end
 def add_wins_losses(teams_hash, stats)
   stats.each do |game|
     if game[:home_score] > game[:away_score]
-      #add win to home teams win's in teams_hash, add loss to away team
+      # add win to home teams win's in teams_hash, add loss to away team
       teams_hash[game[:home_team]][:w] += 1
       teams_hash[game[:away_team]][:l] += 1
     else
-      #add win to away team's wins in teams_hash, add loss to home team
+      # add win to away team's wins in teams_hash, add loss to home team
       teams_hash[game[:away_team]][:w] += 1
       teams_hash[game[:home_team]][:l] += 1
     end
@@ -73,7 +73,17 @@ end
 
          ###############
 def sort_rankings(teams_hash_w_record)
+  # change from outer hash to outer array
+  records_array = teams_hash_w_record.values
 
+  biggest = records_array.pop
+  ranked = []
+  still_unranked = []
+  records_array.each do |team|
+    if biggest[:w] > team[:w]
+
+    end
+  end
 end
          ###############
 teams_hash = build_teams(stats)
