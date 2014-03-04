@@ -34,14 +34,18 @@ stats = [
 def build_teams(stats)
   teams_hash = {}
   stats.each do |game|
-    if !teams_hash[game[:home_team]]
-      teams_hash[game[:home_team]] = {name: game[:home_team], w: 0, l: 0}
-    end
-    if !teams_hash[game[:away_team]]
-      teams_hash[game[:away_team]] = {name: game[:away_team], w: 0, l: 0}
-    end
+    initialize_teams(teams_hash, game)
   end
   teams_hash
+end
+
+def initialize_team(teams_hash, team)
+  teams_hash[team] = {name: team, w: 0, l: 0}
+end
+
+def initialize_teams(teams_hash, game)
+  initialize_team(teams_hash, game[:home_team]) if !teams_hash[game[:home_team]]
+  initialize_team(teams_hash, game[:away_team]) if !teams_hash[game[:away_team]]
 end
 
          ############### this will add wins and losses to teams_hash
